@@ -32,9 +32,10 @@
     body {
       font-family: 'Work Sans', sans-serif;
       background-color: var(--grayscale-100);
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     /* Header Styles */
@@ -43,7 +44,10 @@
       justify-content: space-between;
       align-items: center;
       padding: 32px 28px 16px;
-      position: relative;
+      position: sticky;
+      top: 0;
+      background-color: var(--grayscale-100);
+      z-index: 100;
     }
 
     .logo-section {
@@ -57,6 +61,7 @@
       height: 36px;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       gap: 8px;
     }
 
@@ -75,6 +80,7 @@
     .powered-by {
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       gap: 4px;
       font-size: 12px;
       color: #000;
@@ -146,6 +152,8 @@
       flex-direction: column;
       align-items: center;
       padding: 0 28px;
+      overflow: hidden;
+      min-height: 0;
     }
 
     .document-card {
@@ -157,10 +165,25 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 28px;
-      gap: 18px;
+      padding-top: 0;
+      gap: 0;
       overflow: hidden;
       flex: 1;
+      min-height: 0;
+    }
+
+    .document-card-header {
+      position: sticky;
+      top: 0;
+      background: var(--grayscale-100);
+      z-index: 50;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 28px;
+      gap: 18px;
+      border-radius: 24px 24px 0 0;
     }
 
     .contract-header {
@@ -322,6 +345,189 @@
       margin: 24px 0;
     }
 
+    /* Signing Field Styles */
+    .signing-field {
+      position: relative;
+      display: inline-flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      width: 140px;
+      height: 59px;
+      padding: 0 12px 12px;
+      background: var(--primary-500);
+      opacity: 0.9;
+      color: white;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      margin: 8px 0;
+      user-select: none;
+    }
+
+    .signing-field::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 12px;
+      right: 12px;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .signing-field:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(22, 54, 148, 0.3);
+    }
+
+    .signing-field:active {
+      transform: translateY(0);
+    }
+
+    .signing-field.signed {
+      background: rgba(217, 226, 255, 0.90) !important;
+      color: #040A1E !important;
+      border: none !important;
+      border-radius: 8px !important;
+      cursor: default !important;
+      opacity: 1 !important;
+    }
+
+    .signing-field.signed::after {
+      background-color: rgba(64, 86, 109, 0.3);
+    }
+
+    .signing-field.signed:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .field-inline-wrapper {
+      display: inline;
+    }
+
+    .inline-field {
+      display: inline-flex;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+
+    /* Signing Navigation Bar */
+    .signing-nav {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      position: relative;
+      z-index: 1;
+    }
+
+    .signing-nav.active {
+      display: flex;
+    }
+
+    .progress-container {
+      position: relative;
+      width: 220px;
+      height: 24px;
+      border: 1px solid #CBD5E2;
+      border-radius: 999px;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      height: 16px;
+      width: 0px;
+      background: #3D9A50;
+      border-radius: 999px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-thumb {
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 16px;
+      height: 16px;
+      background-color: #CBD5E2;
+      border: none;
+      border-radius: 999px;
+      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, opacity 0.3s ease;
+      z-index: 2;
+    }
+
+    .progress-thumb.active {
+      opacity: 0;
+    }
+
+    .field-counter {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Work Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 16px;
+      color: #040A1E;
+      white-space: nowrap;
+      z-index: 3;
+      transition: color 0.3s ease;
+    }
+
+    .field-counter.light {
+      color: #FFFFFF;
+    }
+
+    .nav-arrows {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 60px;
+      height: 24px;
+      padding: 0 4px;
+      border: 1px solid #CBD5E2;
+      border-radius: 999px;
+      background: #FFFFFF;
+    }
+
+    .nav-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #040A1E;
+      padding: 1px;
+      overflow: hidden;
+    }
+
+    .nav-arrow:hover {
+      color: var(--primary-500);
+    }
+
+    .nav-arrow svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 1.5;
+    }
+
+    #startSigningBtn.hidden {
+      display: none;
+    }
+
     /* Zoom Controls */
     .zoom-controls {
       position: fixed;
@@ -364,7 +570,9 @@
       width: 100%;
       max-width: 798px;
       flex: 1;
-      min-height: 636px;
+      min-height: 0;
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
     /* Custom Tooltip Styles */
@@ -419,6 +627,9 @@
       gap: 16px;
       justify-content: center;
       transition: all 0.3s ease;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
     }
 
     .content-wrapper.panel-open {
@@ -611,6 +822,863 @@
     .btn-icon.active svg {
       color: var(--primary-500);
     }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: var(--grayscale-0);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 540px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      transform: translateY(20px) scale(0.95);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      padding: 24px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .modal-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--grayscale-800);
+      line-height: 28px;
+    }
+
+    .modal-subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: #617991;
+      line-height: 20px;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    .modal-close:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .modal-close svg {
+      width: 20px;
+      height: 20px;
+      color: #40566D;
+    }
+
+    .modal-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--grayscale-800);
+      line-height: 20px;
+    }
+
+    .form-label .required {
+      color: #E53E3E;
+    }
+
+    .form-input-wrapper {
+      position: relative;
+    }
+
+    .form-input,
+    .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--grayscale-300);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Work Sans', sans-serif;
+      color: var(--grayscale-800);
+      background: var(--grayscale-0);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-input::placeholder,
+    .form-select::placeholder {
+      color: #A0AEC0;
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary-500);
+      box-shadow: 0 0 0 3px rgba(22, 54, 148, 0.1);
+    }
+
+    .form-select {
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #617991;
+    }
+
+    .select-arrow svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--grayscale-300);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Work Sans', sans-serif;
+      color: var(--grayscale-800);
+      background: var(--grayscale-0);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-textarea::placeholder {
+      color: #A0AEC0;
+    }
+
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary-500);
+      box-shadow: 0 0 0 3px rgba(22, 54, 148, 0.1);
+    }
+
+    .modal-footer {
+      padding: 16px 24px 24px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-confirm {
+      background-color: var(--primary-500);
+      color: white;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-confirm:hover {
+      background-color: #0f2a75;
+    }
+
+    .btn-confirm:active {
+      transform: scale(0.98);
+    }
+
+    /* Decline Modal Styles */
+    .decline-description {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--grayscale-800);
+      line-height: 20px;
+    }
+
+    .btn-decline {
+      background-color: var(--primary-500);
+      color: white;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-decline:hover {
+      background-color: #0f2a75;
+    }
+
+    .btn-decline:active {
+      transform: scale(0.98);
+    }
+
+    /* Signature Field Navigator */
+    .signature-navigator {
+      position: fixed;
+      display: none;
+      align-items: center;
+      z-index: 1000;
+      pointer-events: none;
+      transition: top 0.3s ease, opacity 0.2s ease;
+    }
+
+    .signature-navigator.active {
+      display: flex;
+      pointer-events: auto;
+    }
+
+    .navigator-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      height: 36px;
+      padding: 0 16px;
+      background: var(--primary-500);
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      font-size: 14px;
+      font-weight: 400;
+      font-family: 'Work Sans', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      line-height: 20px;
+      margin-left: 20px;
+    }
+
+    .navigator-btn::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-right: 20px solid var(--primary-500);
+      transition: border-right-color 0.2s ease;
+    }
+
+    .navigator-btn:hover {
+      background: #0f2a75;
+    }
+
+    .navigator-btn:hover::before {
+      border-right-color: #0f2a75;
+    }
+
+    /* Adopt Signature Modal Styles */
+    .adopt-modal {
+      max-width: 590px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .adopt-modal .modal-header {
+      padding: 12px 16px;
+      min-height: 72px;
+      border-bottom: 1px solid #CBD5E2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #FFFFFF;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .adopt-modal .modal-title {
+      font-size: 21px;
+      font-weight: 600;
+      color: #040A1E;
+      line-height: 32px;
+    }
+
+    .adopt-modal .modal-close {
+      width: 20px;
+      height: 20px;
+      padding: 1px;
+    }
+
+    .adopt-modal .modal-close svg {
+      width: 18px;
+      height: 18px;
+      color: #40566D;
+    }
+
+    .adopt-modal .modal-body {
+      padding: 16px;
+      gap: 16px;
+      background: #FFFFFF;
+    }
+
+    .name-inputs {
+      display: flex;
+      gap: 16px;
+    }
+
+    .name-inputs .form-group {
+      flex: 1;
+    }
+
+    .adopt-modal .form-group {
+      gap: 4px;
+    }
+
+    .adopt-modal .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #040A1E;
+      line-height: 16px;
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .adopt-modal .form-label .required {
+      color: #E64555;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 15px;
+    }
+
+    .adopt-modal .form-input {
+      padding: 12px 16px;
+      border: 1px solid #CBD5E2;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #040A1E;
+      background: #FFFFFF;
+      line-height: 20px;
+    }
+
+    .adopt-modal .form-input::placeholder {
+      color: #617991;
+    }
+
+    .adopt-modal .form-input:focus {
+      outline: none;
+      border-color: var(--primary-500);
+    }
+
+    .signature-tabs {
+      display: flex;
+      gap: 12px;
+      background: #FFFFFF;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .signature-tab {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+      background: transparent;
+      border: none;
+      font-size: 14px;
+      font-weight: 400;
+      font-family: 'Work Sans', sans-serif;
+      color: #40566D;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 4px;
+    }
+
+    .signature-tab:hover {
+      background: rgba(217, 226, 255, 0.5);
+    }
+
+    .signature-tab.active {
+      background: #D9E2FF;
+      color: #040A1E;
+    }
+
+    .signature-tab svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .font-selector {
+      position: relative;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .font-dropdown {
+      width: 100%;
+      padding: 10px 15px;
+      padding-right: 40px;
+      border: 1px solid #CBD5E2;
+      border-radius: 4px;
+      font-size: 17px;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 400;
+      color: #617991;
+      background: #FFFFFF;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      line-height: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .font-dropdown:focus {
+      outline: none;
+      border-color: var(--primary-500);
+    }
+
+    .font-selector .select-arrow {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #617991;
+    }
+
+    .font-selector .select-arrow svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .signature-preview {
+      width: 100%;
+      min-height: 153px;
+      border: 1.2px solid #CBD5E2;
+      border-radius: 5px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      background: #FFFFFF;
+      position: relative;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .preview-content {
+      display: flex;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    .preview-signature-section {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      min-height: 153px;
+    }
+
+    .preview-initials-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      min-height: 153px;
+    }
+
+    .signature-preview-text {
+      font-family: 'Brush Script MT', 'Segoe Script', cursive;
+      font-size: 36px;
+      color: #040A1E;
+      text-align: center;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: break-word;
+      max-width: 100%;
+    }
+
+    .initials-preview-text {
+      font-family: 'Brush Script MT', 'Segoe Script', cursive;
+      font-size: 32px;
+      color: #040A1E;
+      text-align: center;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .custom-checkbox {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .custom-checkbox input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .custom-checkbox .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: #FFFFFF;
+      border: 0.75px solid #163694;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+    }
+
+    .custom-checkbox input:checked + .checkmark {
+      background: #163694;
+      border-color: #163694;
+    }
+
+    .custom-checkbox .checkmark svg {
+      width: 12px;
+      height: 12px;
+      display: none;
+      color: #FFFFFF;
+    }
+
+    .custom-checkbox input:checked + .checkmark svg {
+      display: block;
+    }
+
+    .checkbox-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: #040A1E;
+      line-height: 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .adopt-modal .modal-footer {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      background: #F8FAFC;
+      border-top: 1px solid #CBD5E2;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .legal-disclaimer {
+      font-size: 12px;
+      font-weight: 400;
+      color: #040A1E;
+      line-height: 19px;
+      width: 100%;
+    }
+
+    .btn-adopt {
+      background-color: #163694;
+      color: white;
+      padding: 10px 20px;
+      height: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      line-height: 21px;
+    }
+
+    .btn-adopt:hover {
+      background-color: #0f2a75;
+    }
+
+    .btn-adopt:active {
+      transform: scale(0.98);
+    }
+
+    .btn-adopt:disabled {
+      background-color: #A0AEC0;
+      cursor: not-allowed;
+    }
+
+    /* Draw Canvas Styles */
+    .draw-canvas-container {
+      width: 100%;
+      height: 153px;
+      border: 1.2px solid #CBD5E2;
+      border-radius: 5px;
+      display: none;
+      flex-direction: column;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+
+    .draw-canvas-container.active {
+      display: flex;
+    }
+
+    .draw-canvas {
+      width: 100%;
+      flex: 1;
+      cursor: crosshair;
+    }
+
+    .canvas-actions {
+      display: flex;
+      justify-content: flex-end;
+      padding: 8px;
+      border-top: 1px solid #CBD5E2;
+    }
+
+    .clear-canvas-btn {
+      font-size: 12px;
+      color: #163694;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-weight: 500;
+    }
+
+    .clear-canvas-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Upload Area Styles */
+    .upload-area {
+      width: 100%;
+      height: 153px;
+      border: 2px dashed #CBD5E2;
+      border-radius: 5px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      background: #F8FAFC;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .upload-area.active {
+      display: flex;
+    }
+
+    .upload-area:hover {
+      border-color: #163694;
+      background: #f0f4ff;
+    }
+
+    .upload-area svg {
+      width: 32px;
+      height: 32px;
+      color: #617991;
+    }
+
+    .upload-text {
+      font-size: 14px;
+      color: #617991;
+    }
+
+    .upload-text strong {
+      color: #163694;
+    }
+
+    .signature-preview.active {
+      display: flex;
+    }
+
+    .signature-preview:not(.active) {
+      display: none;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Inline Type Field Editing Styles */
+    .type-field.editing {
+      background: #D9E2FF;
+      border: 3px solid var(--primary-500);
+      border-radius: 8px;
+      padding: 0;
+      width: 140px;
+      height: 59px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-end;
+      cursor: text;
+      position: relative;
+      opacity: 1;
+      box-shadow: none;
+    }
+
+    .type-field.editing::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 12px;
+      right: 12px;
+      height: 1px;
+      background-color: rgba(64, 86, 109, 0.4);
+    }
+
+    .type-field-input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #040A1E;
+      padding: 12px 12px 16px;
+      caret-color: #040A1E;
+      resize: none;
+    }
+
+    .type-field-input::placeholder {
+      color: transparent;
+    }
+
+    .type-field.editing:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Finish Signing Banner - appears when all fields are complete */
+    .finish-signing-banner {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      background-color: #E3EAF3;
+      padding: 12px 24px;
+      border-radius: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .finish-signing-banner.active {
+      display: flex;
+    }
+
+    .finish-signing-text {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: #000000;
+      flex: 1;
+    }
+
+    .finish-signing-text strong {
+      font-weight: 600;
+    }
+
+    .finish-signing-text a {
+      color: #163694;
+      text-decoration: none;
+    }
+
+    .finish-signing-text a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-finish-signing {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 40px;
+      padding: 10px 20px;
+      background-color: #11A65E;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-finish-signing:hover {
+      background-color: #0e8c4f;
+    }
+
+    .btn-finish-signing:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
@@ -621,7 +1689,7 @@
         <img src="assets/image.png" alt="adidas" style="height: 36px; width: auto;">
       </div>
       <div class="powered-by">
-        <img src="assets/image%20copy.png" alt="Powered by SpotDraft" style="height: 14px; width: auto;">
+        <img src="assets/logo.png" alt="Powered by SpotDraft" style="height: 14px; width: auto;">
       </div>
     </div>
 
@@ -634,34 +1702,16 @@
         Ask AI
       </button>
       <button class="btn-icon tooltip" data-tooltip="View contract info">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="2" width="14" height="16" rx="2"/>
-          <line x1="6" y1="6" x2="14" y2="6"/>
-          <line x1="6" y1="10" x2="14" y2="10"/>
-          <line x1="6" y1="14" x2="10" y2="14"/>
-        </svg>
+        <img src="assets/info.png" alt="View contract info" style="width: 20px; height: 20px;">
       </button>
       <button class="btn-icon tooltip" data-tooltip="Download">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M10 3V13M10 13L6 9M10 13L14 9"/>
-          <path d="M3 15V16C3 16.5523 3.44772 17 4 17H16C16.5523 17 17 16.5523 17 16V15"/>
-        </svg>
+        <img src="assets/download.png" alt="Download" style="width: 20px; height: 20px;">
       </button>
       <button class="btn-icon tooltip" data-tooltip="Reassign Signatory">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="8" cy="6" r="3"/>
-          <path d="M3 17C3 13.5 5 12 8 12"/>
-          <circle cx="14" cy="8" r="2.5"/>
-          <path d="M11 17C11 14.5 12.5 13 14.5 13"/>
-        </svg>
+        <img src="assets/reassign.png" alt="Reassign Signatory" style="width: 20px; height: 20px;">
       </button>
       <button class="btn-icon tooltip" data-tooltip="Decline to sign">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="2" width="14" height="16" rx="2"/>
-          <line x1="7" y1="7" x2="13" y2="7"/>
-          <line x1="7" y1="10" x2="13" y2="10"/>
-          <line x1="7" y1="13" x2="11" y2="13"/>
-        </svg>
+        <img src="assets/declinetosign.png" alt="Decline to sign" style="width: 20px; height: 20px;">
       </button>
     </div>
   </header>
@@ -670,28 +1720,56 @@
   <main class="main-content">
     <div class="content-wrapper" id="contentWrapper">
       <div class="document-card">
-        <div class="contract-header">
-          <h1 class="contract-title">Co-working Space Membership Agreement</h1>
-          <div class="contract-info">
-            <div class="parties-info">
-              <span>Parties: </span>
-              <span class="party-name">Urban Vault</span>
-              <span> & </span>
-              <span class="party-name">Fike I...</span>
-            </div>
-            <div class="recipients-info">
-              <span>Recipients:</span>
-              <div class="avatar-stack">
-                <div class="avatar avatar-mp">MP</div>
-                <div class="avatar avatar-am">AM</div>
+        <div class="document-card-header">
+          <div class="contract-header">
+            <h1 class="contract-title">Co-working Space Membership Agreement</h1>
+            <div class="contract-info">
+              <div class="parties-info">
+                <span>Parties: </span>
+                <span class="party-name">Urban Vault</span>
+                <span> & </span>
+                <span class="party-name">Fike I...</span>
+              </div>
+              <div class="recipients-info">
+                <span>Recipients:</span>
+                <div class="avatar-stack">
+                  <div class="avatar avatar-mp">MP</div>
+                  <div class="avatar avatar-am">AM</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="divider-wrapper">
-          <div class="divider"></div>
-          <button class="btn btn-primary">Start signing</button>
+          <div class="divider-wrapper">
+            <div class="divider"></div>
+            <button class="btn btn-primary" id="startSigningBtn">Start signing</button>
+            <div class="signing-nav" id="signingNav">
+              <div class="progress-container">
+                <div class="progress-fill"></div>
+                <div class="progress-thumb"></div>
+                <span class="field-counter">0/4</span>
+              </div>
+              <div class="nav-arrows">
+                <button class="nav-arrow nav-up" title="Previous field">
+                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 9L7 5L11 9"/>
+                  </svg>
+                </button>
+                <button class="nav-arrow nav-down" title="Next field">
+                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 5L7 9L11 5"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <!-- Finish Signing Banner - shown when all fields are complete -->
+            <div class="finish-signing-banner" id="finishSigningBanner">
+              <p class="finish-signing-text">
+                By clicking <strong>Finish Signing</strong>, I agree to be legally bound by this agreement and the<br><a href="#">Spotdraft Terms of Service</a>.
+              </p>
+              <button class="btn-finish-signing" id="finishSigningBtn">Finish Signing</button>
+            </div>
+          </div>
         </div>
 
         <div class="document-wrapper">
@@ -712,7 +1790,10 @@
                 ("<strong>Party A</strong>")
               </p>
               
-              <p class="doc-text">and</p>
+              <p class="doc-text" style="display: flex; align-items: center; gap: 16px;">
+                and
+                <button class="signing-field signature-field" id="signatureField">Signature</button>
+              </p>
               
               <p class="doc-text">
                 <strong>Acme Innovations Private Limited</strong>,<br>
@@ -721,8 +1802,8 @@
                 ("<strong>Party B</strong>").
               </p>
               
-              <p class="doc-text">
-                Party A and Party B may be referred to individually as a "<span class="highlight">Party</span>" and collectively as the "<strong>Parties</strong>".
+              <p class="doc-text" style="line-height: 2.2;">
+                Party A and Party B may be referred to individually as a "<span class="highlight">Pa</span><button class="signing-field type-field inline-field" id="typeField">Job title</button><span class="highlight">rty</span>" and collectively as the "<strong>Parties</strong>".
               </p>
               
               <div class="doc-divider"></div>
@@ -731,6 +1812,16 @@
               
               <p class="doc-text">
                 The Parties wish to engage in discussions regarding a <strong>potential commercial partnership for</strong>
+              </p>
+
+              <p class="doc-text" style="display: flex; align-items: center; gap: 16px; margin-top: 24px;">
+                Authorized by:
+                <button class="signing-field type-field" id="initialsField1">Name</button>
+              </p>
+
+              <p class="doc-text" style="display: flex; align-items: center; gap: 16px; margin-top: 16px;">
+                Date confirmed:
+                <button class="signing-field date-field" id="dateField">Date</button>
               </p>
             </div>
           </div>
@@ -861,6 +1952,196 @@
     </div>
   </main>
 
+  <!-- Decline to Sign Modal -->
+  <div class="modal-overlay" id="declineModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 class="modal-title">Decline to Sign</h2>
+        </div>
+        <button class="modal-close" id="declineModalClose" title="Close">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="4" y1="4" x2="16" y2="16"/>
+            <line x1="16" y1="4" x2="4" y2="16"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="decline-description">If declined, this contract invitation will expire for all parties. Any added signature will be removed.</p>
+        <div class="form-group">
+          <label class="form-label">Type your reason here<span class="required">*</span></label>
+          <textarea class="form-textarea" placeholder="Add reason for declining" id="declineReason"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-decline" id="confirmDecline">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reassign Signatory Modal -->
+  <div class="modal-overlay" id="reassignModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 class="modal-title">Reassign Signatory</h2>
+          <p class="modal-subtitle">Assign signature to another person</p>
+        </div>
+        <button class="modal-close" id="modalClose" title="Close">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="4" y1="4" x2="16" y2="16"/>
+            <line x1="16" y1="4" x2="4" y2="16"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Signatory E-mail<span class="required">*</span></label>
+          <div class="form-input-wrapper">
+            <input type="text" class="form-select" placeholder="Enter E-mail" id="signatoryEmail">
+            <span class="select-arrow">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 6L8 10L12 6"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Signatory Name<span class="required">*</span></label>
+          <div class="form-input-wrapper">
+            <input type="text" class="form-select" placeholder="Enter Name" id="signatoryName">
+            <span class="select-arrow">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 6L8 10L12 6"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Note</label>
+          <textarea class="form-textarea" placeholder="Add note" id="reassignNote"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-confirm" id="confirmReassign">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signature Navigator -->
+  <div class="signature-navigator" id="signatureNavigator">
+    <button class="navigator-btn">Add signature</button>
+  </div>
+
+  <!-- Adopt Signature Modal -->
+  <div class="modal-overlay" id="adoptSignatureModal">
+    <div class="modal adopt-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Adopt your Signature</h2>
+        <button class="modal-close" id="adoptModalClose" title="Close">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="3" y1="3" x2="15" y2="15"/>
+            <line x1="15" y1="3" x2="3" y2="15"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="name-inputs">
+          <div class="form-group">
+            <label class="form-label">Full name<span class="required">*</span></label>
+            <input type="text" class="form-input" placeholder="Enter name" id="signatureFullName">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Initials<span class="required">*</span></label>
+            <input type="text" class="form-input" placeholder="Enter initials" id="signatureInitials">
+          </div>
+        </div>
+
+        <div class="signature-tabs">
+          <button class="signature-tab active" data-tab="type">
+            <img src="assets/typ.png" alt="Type" style="width: 16px; height: 16px;">
+            Type
+          </button>
+          <button class="signature-tab" data-tab="draw">
+            <img src="assets/draw.png" alt="Draw" style="width: 16px; height: 16px;">
+            Draw
+          </button>
+          <button class="signature-tab" data-tab="upload">
+            <img src="assets/upload.png" alt="Upload" style="width: 16px; height: 16px;">
+            Upload
+          </button>
+        </div>
+
+        <!-- Type Tab Content -->
+        <div class="tab-content active" id="typeTabContent">
+          <div class="font-selector">
+            <select class="font-dropdown" id="fontSelect">
+              <option value="script">Script</option>
+              <option value="cursive">Cursive</option>
+              <option value="elegant">Elegant</option>
+              <option value="formal">Formal</option>
+            </select>
+            <span class="select-arrow">
+              <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 6L8.5 11L13 6"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="signature-preview active" id="signaturePreview">
+            <div class="preview-content">
+              <div class="preview-signature-section">
+                <span class="signature-preview-text" id="signaturePreviewText"></span>
+              </div>
+              <div class="preview-initials-section">
+                <span class="initials-preview-text" id="initialsPreviewText"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Draw Tab Content -->
+        <div class="tab-content" id="drawTabContent">
+          <div class="draw-canvas-container active">
+            <canvas class="draw-canvas" id="signatureCanvas"></canvas>
+            <div class="canvas-actions">
+              <button class="clear-canvas-btn" id="clearCanvas">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Tab Content -->
+        <div class="tab-content" id="uploadTabContent">
+          <div class="upload-area active" id="uploadArea">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M16 20V6"/>
+              <path d="M10 10L16 4L22 10"/>
+              <path d="M6 20V26H26V20"/>
+            </svg>
+            <span class="upload-text">Drag & drop or <strong>browse</strong></span>
+          </div>
+          <input type="file" id="signatureUpload" accept="image/*" style="display: none;">
+        </div>
+
+        <div class="checkbox-group">
+          <label class="custom-checkbox">
+            <input type="checkbox" id="insertInitials">
+            <span class="checkmark">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 6L5 9L10 3"/>
+              </svg>
+            </span>
+          </label>
+          <label class="checkbox-label" for="insertInitials">Insert same initial in 3 other places.</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="legal-disclaimer">I understand this is a legal representation of my signature.</p>
+        <button class="btn-adopt" id="adoptAndSign">Adopt and Sign</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Zoom Controls -->
   <div class="zoom-controls">
     <button class="zoom-btn" title="Zoom In">
@@ -940,6 +2221,746 @@
       header.addEventListener('click', function() {
         this.classList.toggle('collapsed');
       });
+    });
+
+    // Reassign Signatory Modal
+    const reassignModal = document.getElementById('reassignModal');
+    const reassignBtn = document.querySelector('.btn-icon[data-tooltip="Reassign Signatory"]');
+    const modalClose = document.getElementById('modalClose');
+    const confirmReassign = document.getElementById('confirmReassign');
+
+    function openReassignModal() {
+      reassignModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeReassignModal() {
+      reassignModal.classList.remove('active');
+      document.body.style.overflow = '';
+      // Clear form fields
+      document.getElementById('signatoryEmail').value = '';
+      document.getElementById('signatoryName').value = '';
+      document.getElementById('reassignNote').value = '';
+    }
+
+    reassignBtn.addEventListener('click', openReassignModal);
+    modalClose.addEventListener('click', closeReassignModal);
+
+    // Close modal when clicking overlay
+    reassignModal.addEventListener('click', function(e) {
+      if (e.target === reassignModal) {
+        closeReassignModal();
+      }
+    });
+
+    // Close modal with Escape key - handled in decline modal section
+
+    // Confirm button action
+    confirmReassign.addEventListener('click', function() {
+      const email = document.getElementById('signatoryEmail').value;
+      const name = document.getElementById('signatoryName').value;
+      const note = document.getElementById('reassignNote').value;
+      
+      if (email && name) {
+        // Handle the reassignment logic here
+        console.log('Reassigning signatory:', { email, name, note });
+        closeReassignModal();
+      } else {
+        // Show validation feedback
+        if (!email) {
+          document.getElementById('signatoryEmail').style.borderColor = '#E53E3E';
+        }
+        if (!name) {
+          document.getElementById('signatoryName').style.borderColor = '#E53E3E';
+        }
+      }
+    });
+
+    // Reset border color on input
+    ['signatoryEmail', 'signatoryName'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function() {
+        this.style.borderColor = '';
+      });
+    });
+
+    // Decline to Sign Modal
+    const declineModal = document.getElementById('declineModal');
+    const declineBtn = document.querySelector('.btn-icon[data-tooltip="Decline to sign"]');
+    const declineModalClose = document.getElementById('declineModalClose');
+    const confirmDecline = document.getElementById('confirmDecline');
+    const declineReason = document.getElementById('declineReason');
+
+    function openDeclineModal() {
+      declineModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDeclineModal() {
+      declineModal.classList.remove('active');
+      document.body.style.overflow = '';
+      // Clear form fields
+      declineReason.value = '';
+      declineReason.style.borderColor = '';
+    }
+
+    declineBtn.addEventListener('click', openDeclineModal);
+    declineModalClose.addEventListener('click', closeDeclineModal);
+
+    // Close modal when clicking overlay
+    declineModal.addEventListener('click', function(e) {
+      if (e.target === declineModal) {
+        closeDeclineModal();
+      }
+    });
+
+    // Note: Escape key handler is defined later to include all modals
+
+    // Confirm decline action
+    confirmDecline.addEventListener('click', function() {
+      const reason = declineReason.value.trim();
+      
+      if (reason) {
+        // Handle the decline logic here
+        console.log('Declining to sign:', { reason });
+        closeDeclineModal();
+      } else {
+        // Show validation feedback
+        declineReason.style.borderColor = '#E53E3E';
+      }
+    });
+
+    // Reset border color on input for decline reason
+    declineReason.addEventListener('input', function() {
+      this.style.borderColor = '';
+    });
+
+    // Start Signing Flow
+    const startSigningBtn = document.getElementById('startSigningBtn');
+    const signingNav = document.getElementById('signingNav');
+    const signatureNavigator = document.getElementById('signatureNavigator');
+    const signatureField = document.getElementById('signatureField');
+    const navUp = document.querySelector('.nav-up');
+    const navDown = document.querySelector('.nav-down');
+    const fieldCounter = document.querySelector('.field-counter');
+    const progressThumb = document.querySelector('.progress-thumb');
+    const progressFill = document.querySelector('.progress-fill');
+
+    // Track all signing fields
+    const signingFields = [
+      document.getElementById('signatureField'),
+      document.getElementById('typeField'),
+      document.getElementById('initialsField1'),
+      document.getElementById('dateField')
+    ];
+    const totalFields = signingFields.length;
+    let signedFields = new Set();
+    let currentFieldIndex = 0;
+
+    // Finish Signing Banner reference
+    const finishSigningBanner = document.getElementById('finishSigningBanner');
+    const finishSigningBtn = document.getElementById('finishSigningBtn');
+
+    function updateProgress() {
+      const signedCount = signedFields.size;
+      fieldCounter.textContent = `${signedCount}/${totalFields}`;
+      
+      // Calculate fill width - container is 220px, with 3px padding on left and space for counter
+      const containerWidth = 220;
+      const leftPadding = 3;
+      const counterSpace = 40; // Space for the counter on the right
+      const maxFillWidth = containerWidth - leftPadding - counterSpace;
+      
+      if (signedCount > 0) {
+        const fillWidth = (signedCount / totalFields) * maxFillWidth;
+        progressFill.style.width = `${fillWidth}px`;
+        progressThumb.classList.add('active'); // Hide thumb when there's progress
+      } else {
+        progressFill.style.width = '0px';
+        progressThumb.classList.remove('active'); // Show gray thumb when no progress
+      }
+      
+      // Update counter color if fill is near it
+      const fillPercent = (signedCount / totalFields) * 100;
+      if (fillPercent > 85) {
+        fieldCounter.classList.add('light');
+      } else {
+        fieldCounter.classList.remove('light');
+      }
+      
+      // Check if all fields are signed - show finish signing banner
+      if (signedCount === totalFields) {
+        showFinishSigningBanner();
+      }
+    }
+
+    function showFinishSigningBanner() {
+      // Hide the progress bar
+      signingNav.classList.remove('active');
+      // Show the finish signing banner
+      finishSigningBanner.classList.add('active');
+      // Hide the signature navigator
+      signatureNavigator.classList.remove('active');
+    }
+
+    // Handle Finish Signing button click
+    finishSigningBtn.addEventListener('click', function() {
+      // Handle the finish signing action
+      console.log('Finish Signing clicked - all fields signed!');
+      // You can add redirect logic or API call here
+      alert('Document signed successfully!');
+    });
+
+    function markFieldAsSigned(fieldId) {
+      signedFields.add(fieldId);
+      updateProgress();
+    }
+
+    function navigateToField(index) {
+      if (index >= 0 && index < totalFields) {
+        currentFieldIndex = index;
+        const field = signingFields[index];
+        if (field) {
+          // Scroll within the document wrapper to center the field
+          const documentWrapper = document.querySelector('.document-wrapper');
+          const fieldRect = field.getBoundingClientRect();
+          const wrapperRect = documentWrapper.getBoundingClientRect();
+          
+          // Calculate how much to scroll to center the field in the wrapper
+          const fieldCenterInWrapper = fieldRect.top - wrapperRect.top + (fieldRect.height / 2);
+          const wrapperCenter = wrapperRect.height / 2;
+          const scrollAmount = fieldCenterInWrapper - wrapperCenter;
+          
+          documentWrapper.scrollBy({
+            top: scrollAmount,
+            behavior: 'smooth'
+          });
+          
+          setTimeout(positionNavigator, 400);
+        }
+      }
+    }
+
+    function positionNavigator() {
+      if (!signatureNavigator.classList.contains('active')) return;
+      
+      // Find the first unsigned field, or use current field
+      let targetField = signingFields[currentFieldIndex];
+      for (let i = 0; i < signingFields.length; i++) {
+        if (!signedFields.has(signingFields[i].id)) {
+          targetField = signingFields[i];
+          currentFieldIndex = i;
+          break;
+        }
+      }
+      
+      // Hide navigator if all fields are signed
+      if (signedFields.size === totalFields) {
+        signatureNavigator.style.opacity = '0';
+        return;
+      } else {
+        signatureNavigator.style.opacity = '1';
+      }
+      
+      const fieldRect = targetField.getBoundingClientRect();
+      const documentPreview = document.querySelector('.document-preview');
+      
+      // Get the right edge of the document preview
+      const previewRect = documentPreview.getBoundingClientRect();
+      
+      // Position the line at the right edge of the document preview
+      signatureNavigator.style.left = `${previewRect.right}px`;
+      signatureNavigator.style.top = `${fieldRect.top + (fieldRect.height / 2)}px`;
+      signatureNavigator.style.transform = 'translateY(-50%)';
+      
+      // Update navigator button text based on field type
+      const fieldId = targetField.id;
+      const fieldType = targetField.textContent.toLowerCase();
+      if (fieldType.includes('signature')) {
+        navigatorBtn.textContent = 'Add signature';
+      } else if (fieldId === 'initialsField1' || fieldType.includes('name')) {
+        navigatorBtn.textContent = 'Enter name';
+      } else if (fieldId === 'typeField' || fieldType.includes('job title')) {
+        navigatorBtn.textContent = 'Enter Job title';
+      } else if (fieldType.includes('date')) {
+        navigatorBtn.textContent = 'Add date';
+      }
+    }
+
+    // Auto-fill and sign the date field
+    function autoFillDateField() {
+      const dateField = document.getElementById('dateField');
+      const today = new Date();
+      const dateStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      
+      // Set the date text
+      dateField.textContent = dateStr;
+      
+      // Mark as signed
+      signedFields.add(dateField.id);
+      
+      // Apply signed styling
+      dateField.classList.add('signed');
+    }
+
+    // Auto-fill date on page load
+    autoFillDateField();
+
+    startSigningBtn.addEventListener('click', function() {
+      startSigningBtn.classList.add('hidden');
+      signingNav.classList.add('active');
+      signatureNavigator.classList.add('active');
+      updateProgress();
+      
+      // Scroll to first unsigned field
+      navigateToField(0);
+    });
+
+    // Update navigator position on scroll and resize
+    window.addEventListener('scroll', positionNavigator, true);
+    window.addEventListener('resize', positionNavigator);
+
+    // Navigator button reference for modal handling
+    const navigatorBtn = document.querySelector('.navigator-btn');
+
+    navUp.addEventListener('click', function() {
+      if (currentFieldIndex > 0) {
+        navigateToField(currentFieldIndex - 1);
+      }
+    });
+
+    navDown.addEventListener('click', function() {
+      if (currentFieldIndex < totalFields - 1) {
+        navigateToField(currentFieldIndex + 1);
+      }
+    });
+
+    // Adopt Signature Modal
+    const adoptSignatureModal = document.getElementById('adoptSignatureModal');
+    const adoptModalClose = document.getElementById('adoptModalClose');
+    const adoptAndSign = document.getElementById('adoptAndSign');
+    const signatureFullName = document.getElementById('signatureFullName');
+    const signatureInitials = document.getElementById('signatureInitials');
+    const signaturePreviewText = document.getElementById('signaturePreviewText');
+    const signaturePlaceholder = document.getElementById('signaturePlaceholder');
+    const fontSelect = document.getElementById('fontSelect');
+    const signatureTabs = document.querySelectorAll('.signature-tab');
+    const tabContents = {
+      type: document.getElementById('typeTabContent'),
+      draw: document.getElementById('drawTabContent'),
+      upload: document.getElementById('uploadTabContent')
+    };
+    const typeField = document.getElementById('typeField');
+
+    function openAdoptSignatureModal() {
+      adoptSignatureModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      signatureFullName.focus();
+    }
+
+    function closeAdoptSignatureModal() {
+      adoptSignatureModal.classList.remove('active');
+      document.body.style.overflow = '';
+      // Clear form fields
+      signatureFullName.value = '';
+      signatureInitials.value = '';
+      signatureFullName.style.borderColor = '';
+      signatureInitials.style.borderColor = '';
+      updateSignaturePreview();
+    }
+
+    adoptModalClose.addEventListener('click', closeAdoptSignatureModal);
+
+    // Close modal when clicking overlay
+    adoptSignatureModal.addEventListener('click', function(e) {
+      if (e.target === adoptSignatureModal) {
+        closeAdoptSignatureModal();
+      }
+    });
+
+    // Update Escape key handler to include adopt signature modal
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (reassignModal.classList.contains('active')) {
+          closeReassignModal();
+        }
+        if (declineModal.classList.contains('active')) {
+          closeDeclineModal();
+        }
+        if (adoptSignatureModal.classList.contains('active')) {
+          closeAdoptSignatureModal();
+        }
+      }
+    });
+
+    // Track which field triggered the modal
+    let activeSigningField = null;
+
+    // Handle Navigator button click - open adopt signature modal or inline edit
+    navigatorBtn.addEventListener('click', function() {
+      // Find first unsigned field
+      for (let i = 0; i < signingFields.length; i++) {
+        if (!signedFields.has(signingFields[i].id)) {
+          activeSigningField = signingFields[i];
+          currentFieldIndex = i;
+          break;
+        }
+      }
+      
+      // Check if the active field is a type field - use inline editing
+      if (activeSigningField && activeSigningField.classList.contains('type-field')) {
+        openInlineTypeEdit(activeSigningField);
+      } else {
+        openAdoptSignatureModal();
+      }
+    });
+
+    // Add click handlers for all signing fields
+    signingFields.forEach((field, index) => {
+      if (field) {
+        field.addEventListener('click', function(e) {
+          if (!signedFields.has(field.id)) {
+            activeSigningField = field;
+            currentFieldIndex = index;
+            
+            // Check if this is a type field - use inline editing instead of modal
+            if (field.classList.contains('type-field')) {
+              e.stopPropagation();
+              openInlineTypeEdit(field);
+            } else {
+              openAdoptSignatureModal();
+            }
+          }
+        });
+      }
+    });
+
+    // Inline Type Field Editing
+    function openInlineTypeEdit(field) {
+      // Don't open if already editing
+      if (field.classList.contains('editing')) return;
+      
+      // Save original content
+      const originalContent = field.textContent;
+      const originalNavigatorText = navigatorBtn.innerHTML;
+      
+      // Determine placeholder and navigator text based on field
+      let placeholderText = 'Add job title';
+      let navText = 'Enter Job title';
+      if (field.id === 'initialsField1') {
+        placeholderText = 'Add name';
+        navText = 'Enter name';
+      }
+      
+      // Add editing class
+      field.classList.add('editing');
+      
+      // Replace content with input
+      field.innerHTML = '';
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'type-field-input';
+      input.placeholder = placeholderText;
+      field.appendChild(input);
+      
+      // Focus the input
+      input.focus();
+      
+      // Set navigator text when inline edit opens
+      navigatorBtn.textContent = navText;
+      
+      // Update navigator button when user starts typing
+      input.addEventListener('input', function() {
+        if (this.value.trim().length > 0) {
+          navigatorBtn.innerHTML = 'Next (Ctrl + <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-left: 2px;"><rect x="1" y="1" width="14" height="14" rx="2" stroke="white" stroke-width="1.5" fill="none"/><path d="M5 8H11M11 8L8.5 5.5M11 8L8.5 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>)';
+        } else {
+          navigatorBtn.textContent = navText;
+        }
+      });
+      
+      // Handle input completion
+      function completeEdit() {
+        const value = input.value.trim();
+        
+        if (value) {
+          // Mark as signed
+          markFieldAsSigned(field.id);
+          
+          // Update field appearance
+          field.innerHTML = '';
+          field.textContent = value;
+          field.classList.remove('editing');
+          field.classList.add('signed');
+          
+          // Navigate to next field
+          setTimeout(() => {
+            let nextUnsignedIndex = -1;
+            for (let i = 0; i < signingFields.length; i++) {
+              if (!signedFields.has(signingFields[i].id)) {
+                nextUnsignedIndex = i;
+                break;
+              }
+            }
+            
+            if (nextUnsignedIndex !== -1) {
+              currentFieldIndex = nextUnsignedIndex;
+              const nextField = signingFields[nextUnsignedIndex];
+              
+              const documentWrapper = document.querySelector('.document-wrapper');
+              const fieldRect = nextField.getBoundingClientRect();
+              const wrapperRect = documentWrapper.getBoundingClientRect();
+              
+              const fieldCenterInWrapper = fieldRect.top - wrapperRect.top + (fieldRect.height / 2);
+              const wrapperCenter = wrapperRect.height / 2;
+              const scrollAmount = fieldCenterInWrapper - wrapperCenter;
+              
+              documentWrapper.scrollBy({
+                top: scrollAmount,
+                behavior: 'smooth'
+              });
+              
+              setTimeout(positionNavigator, 400);
+            } else {
+              positionNavigator();
+            }
+          }, 150);
+        } else {
+          // Restore original state
+          field.innerHTML = '';
+          field.textContent = originalContent;
+          field.classList.remove('editing');
+          // Reset navigator text
+          positionNavigator();
+        }
+      }
+      
+      // Complete on Enter key
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          completeEdit();
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          field.innerHTML = '';
+          field.textContent = originalContent;
+          field.classList.remove('editing');
+        }
+      });
+      
+      // Complete on blur (clicking outside)
+      input.addEventListener('blur', function() {
+        // Small delay to allow for intentional clicks
+        setTimeout(completeEdit, 100);
+      });
+    }
+
+    // Tab switching
+    signatureTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const targetTab = this.dataset.tab;
+        
+        // Update active tab
+        signatureTabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Show/hide tab content
+        Object.keys(tabContents).forEach(key => {
+          if (key === targetTab) {
+            tabContents[key].classList.add('active');
+          } else {
+            tabContents[key].classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Get initials preview element
+    const initialsPreviewText = document.getElementById('initialsPreviewText');
+
+    // Update signature preview when name changes
+    function updateSignaturePreview() {
+      const name = signatureFullName.value.trim();
+      signaturePreviewText.textContent = name;
+    }
+
+    // Update initials preview when initials change
+    function updateInitialsPreview() {
+      const initials = signatureInitials.value.trim();
+      initialsPreviewText.textContent = initials;
+    }
+
+    signatureFullName.addEventListener('input', updateSignaturePreview);
+    signatureInitials.addEventListener('input', updateInitialsPreview);
+
+    // Font style changes
+    const fontStyles = {
+      script: "'Brush Script MT', 'Segoe Script', cursive",
+      cursive: "'Lucida Handwriting', 'Apple Chancery', cursive",
+      elegant: "'Edwardian Script ITC', 'Snell Roundhand', cursive",
+      formal: "'Monotype Corsiva', 'URW Chancery L', cursive"
+    };
+
+    fontSelect.addEventListener('change', function() {
+      const selectedFont = this.value;
+      const fontFamily = fontStyles[selectedFont] || fontStyles.script;
+      signaturePreviewText.style.fontFamily = fontFamily;
+      initialsPreviewText.style.fontFamily = fontFamily;
+    });
+
+    // Drawing canvas functionality
+    const canvas = document.getElementById('signatureCanvas');
+    const ctx = canvas.getContext('2d');
+    const clearCanvasBtn = document.getElementById('clearCanvas');
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    function initCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      ctx.strokeStyle = '#2F3941';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!isDrawing) return;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mouseout', () => isDrawing = false);
+
+    clearCanvasBtn.addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Initialize canvas when tab is shown
+    signatureTabs.forEach(tab => {
+      if (tab.dataset.tab === 'draw') {
+        tab.addEventListener('click', () => {
+          setTimeout(initCanvas, 100);
+        });
+      }
+    });
+
+    // Upload functionality
+    const uploadArea = document.getElementById('uploadArea');
+    const signatureUpload = document.getElementById('signatureUpload');
+
+    uploadArea.addEventListener('click', () => {
+      signatureUpload.click();
+    });
+
+    signatureUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        console.log('File selected:', file.name);
+        // Handle file upload here
+      }
+    });
+
+    // Adopt and Sign button
+    adoptAndSign.addEventListener('click', function() {
+      const name = signatureFullName.value.trim();
+      const initials = signatureInitials.value.trim();
+
+      if (name && initials && activeSigningField) {
+        console.log('Signature adopted:', { name, initials, field: activeSigningField.id });
+        
+        // Mark the field as signed
+        markFieldAsSigned(activeSigningField.id);
+        
+        // Update the field appearance based on type
+        const fieldType = activeSigningField.textContent.toLowerCase();
+        if (fieldType.includes('signature')) {
+          activeSigningField.textContent = name;
+          activeSigningField.style.fontFamily = fontStyles[fontSelect.value] || fontStyles.script;
+        } else if (fieldType.includes('initials')) {
+          activeSigningField.textContent = initials;
+          activeSigningField.style.fontFamily = fontStyles[fontSelect.value] || fontStyles.script;
+        } else if (fieldType.includes('type')) {
+          activeSigningField.textContent = name;
+          activeSigningField.style.fontFamily = fontStyles[fontSelect.value] || fontStyles.script;
+        } else if (fieldType.includes('date')) {
+          const today = new Date();
+          const dateStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          activeSigningField.textContent = dateStr;
+        }
+        
+        // Style the signed field
+        activeSigningField.classList.add('signed');
+        activeSigningField.style.fontSize = '14px';
+        activeSigningField.style.background = 'rgba(217, 226, 255, 0.90)';
+        activeSigningField.style.color = '#040A1E';
+        activeSigningField.style.border = 'none';
+        activeSigningField.style.borderRadius = '8px';
+        activeSigningField.style.cursor = 'default';
+        
+        closeAdoptSignatureModal();
+        
+        // Auto-navigate to next unsigned field
+        setTimeout(() => {
+          // Find next unsigned field
+          let nextUnsignedIndex = -1;
+          for (let i = 0; i < signingFields.length; i++) {
+            if (!signedFields.has(signingFields[i].id)) {
+              nextUnsignedIndex = i;
+              break;
+            }
+          }
+          
+          if (nextUnsignedIndex !== -1) {
+            currentFieldIndex = nextUnsignedIndex;
+            const nextField = signingFields[nextUnsignedIndex];
+            
+            // Scroll within the document wrapper to center the next field
+            const documentWrapper = document.querySelector('.document-wrapper');
+            const fieldRect = nextField.getBoundingClientRect();
+            const wrapperRect = documentWrapper.getBoundingClientRect();
+            
+            // Calculate how much to scroll to center the field in the wrapper
+            const fieldCenterInWrapper = fieldRect.top - wrapperRect.top + (fieldRect.height / 2);
+            const wrapperCenter = wrapperRect.height / 2;
+            const scrollAmount = fieldCenterInWrapper - wrapperCenter;
+            
+            documentWrapper.scrollBy({
+              top: scrollAmount,
+              behavior: 'smooth'
+            });
+            
+            // Also update navigator position
+            setTimeout(positionNavigator, 400);
+          } else {
+            positionNavigator();
+          }
+        }, 150);
+      } else {
+        if (!name) {
+          signatureFullName.style.borderColor = '#E53E3E';
+        }
+        if (!initials) {
+          signatureInitials.style.borderColor = '#E53E3E';
+        }
+      }
+    });
+
+    // Reset border color on input
+    signatureFullName.addEventListener('input', function() {
+      this.style.borderColor = '';
+    });
+
+    signatureInitials.addEventListener('input', function() {
+      this.style.borderColor = '';
     });
   </script>
 </body>
