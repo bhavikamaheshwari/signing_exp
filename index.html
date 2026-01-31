@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Signing - Co-working Space Membership Agreement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-500: #163694;
+      --grayscale-800: #2F3941;
+      --grayscale-400: #7D97B3;
+      --grayscale-300: #CBD5E2;
+      --grayscale-100: #F8FAFC;
+      --grayscale-0: #FFFFFF;
+      --secondary-5-500: #C7B1BA;
+      --secondary-5-border: #683D4F;
+      --secondary-6-500: #CCCC95;
+      --secondary-6-border: #6D6D33;
+      --ai-gradient-start: #884DFF;
+      --ai-gradient-end: #501C8C;
+    }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background-color: var(--grayscale-100);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 28px 16px;
+      position: relative;
+    }
+
+    .logo-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .brand-logo {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-logo svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .brand-name {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--grayscale-800);
+    }
+
+    .powered-by {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: #000;
+    }
+
+    .powered-by svg {
+      height: 13px;
+      width: auto;
+    }
+
+    .document-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ai {
+      background: linear-gradient(180deg, var(--ai-gradient-start) 0%, var(--ai-gradient-end) 100%);
+      color: white;
+    }
+
+    .btn-ai:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-ai svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .btn-icon {
+      padding: 8px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-icon:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--grayscale-400);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 28px;
+    }
+
+    .document-card {
+      background: var(--grayscale-100);
+      border: 1px solid var(--grayscale-300);
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 926px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 28px;
+      gap: 18px;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .contract-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 456px;
+      text-align: center;
+    }
+
+    .contract-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 24px;
+      line-height: 32px;
+      color: var(--grayscale-800);
+      font-weight: 400;
+    }
+
+    .contract-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      width: 100%;
+      font-size: 14px;
+      color: var(--grayscale-800);
+    }
+
+    .parties-info {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .party-name {
+      font-weight: 600;
+    }
+
+    .recipients-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .avatar-stack {
+      display: flex;
+      padding-right: 6px;
+    }
+
+    .avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 400;
+      border: 1px solid white;
+      margin-right: -6px;
+    }
+
+    .avatar-mp {
+      background-color: var(--secondary-6-500);
+      color: var(--secondary-6-border);
+      z-index: 2;
+    }
+
+    .avatar-am {
+      background-color: var(--secondary-5-500);
+      color: var(--secondary-5-border);
+      z-index: 1;
+    }
+
+    .divider-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .divider {
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background-color: var(--grayscale-300);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-500);
+      color: white;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary:hover {
+      background-color: #0f2a75;
+    }
+
+    .document-preview {
+      width: 100%;
+      max-width: 798px;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .document-content {
+      padding: 48px 64px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .doc-id {
+      font-size: 10px;
+      color: #666;
+      margin-bottom: 32px;
+    }
+
+    .doc-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a365d;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+
+    .doc-text {
+      margin-bottom: 16px;
+    }
+
+    .doc-text strong {
+      font-weight: 600;
+    }
+
+    .doc-text .highlight {
+      color: #4299e1;
+    }
+
+    .doc-section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a365d;
+      margin-top: 32px;
+      margin-bottom: 16px;
+    }
+
+    .doc-divider {
+      height: 1px;
+      background: #e2e8f0;
+      margin: 24px 0;
+    }
+
+    /* Zoom Controls */
+    .zoom-controls {
+      position: fixed;
+      left: 34px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .zoom-btn {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .zoom-btn:hover {
+      opacity: 1;
+    }
+
+    .zoom-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .zoom-level {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .document-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 798px;
+      flex: 1;
+      min-height: 636px;
+    }
+
+    /* Custom Tooltip Styles */
+    .tooltip {
+      position: relative;
+    }
+
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1a1a1a;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 400;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .tooltip::before {
+      content: '';
+      position: absolute;
+      top: calc(100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-bottom-color: #1a1a1a;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .tooltip:hover::after,
+    .tooltip:hover::before {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Contract Info Panel Styles */
+    .content-wrapper {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .content-wrapper.panel-open {
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .contract-info-panel {
+      background: var(--grayscale-0);
+      border: 1px solid var(--grayscale-300);
+      border-radius: 16px;
+      width: 401px;
+      min-width: 401px;
+      height: 556px;
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      animation: slideIn 0.3s ease;
+    }
+
+    .content-wrapper.panel-open .contract-info-panel {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--grayscale-300);
+      height: 68px;
+      background: var(--grayscale-0);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .panel-title {
+      font-size: 18px;
+      font-weight: 400;
+      color: #040A1E;
+      line-height: 28px;
+    }
+
+    .panel-close {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    .panel-close:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .panel-close svg {
+      width: 14px;
+      height: 14px;
+      color: #40566D;
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+    }
+
+    /* Expandable Section Styles */
+    .expandable-section {
+      margin-bottom: 12px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 24px 8px 20px;
+      cursor: pointer;
+      background: var(--grayscale-100);
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    .section-header:hover {
+      background-color: #eef2f7;
+    }
+
+    .section-header.collapsed {
+      background: transparent;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #40566D;
+      line-height: 20px;
+      white-space: nowrap;
+    }
+
+    .section-header.collapsed .section-title {
+      font-weight: 400;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background-color: var(--grayscale-300);
+    }
+
+    .section-chevron {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s;
+    }
+
+    .section-header.collapsed .section-chevron {
+      transform: rotate(180deg);
+    }
+
+    .section-content {
+      padding: 8px 24px;
+      display: block;
+    }
+
+    .section-header.collapsed + .section-content {
+      display: none;
+    }
+
+    /* Party Information Styles */
+    .info-group {
+      padding: 6px 8px;
+    }
+
+    .info-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: #40566D;
+      line-height: 20px;
+      margin-bottom: 8px;
+    }
+
+    .info-value {
+      font-size: 12px;
+      font-weight: 400;
+      color: #40566D;
+      line-height: 16px;
+      padding-left: 24px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      padding-left: 24px;
+    }
+
+    .contact-icon {
+      width: 14px;
+      height: 14px;
+      color: #617991;
+    }
+
+    .contact-text {
+      font-size: 12px;
+      font-weight: 400;
+      color: #617991;
+      line-height: 16px;
+    }
+
+    /* Active state for button */
+    .btn-icon.active {
+      background-color: rgba(22, 54, 148, 0.1);
+    }
+
+    .btn-icon.active svg {
+      color: var(--primary-500);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-section">
+      <div class="brand-logo">
+        <img src="assets/image.png" alt="adidas" style="height: 36px; width: auto;">
+      </div>
+      <div class="powered-by">
+        <img src="assets/image%20copy.png" alt="Powered by SpotDraft" style="height: 14px; width: auto;">
+      </div>
+    </div>
+
+    <div class="document-actions">
+      <button class="btn btn-ai">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8L10 2Z" fill="white"/>
+          <circle cx="5" cy="5" r="1.5" fill="white" opacity="0.6"/>
+        </svg>
+        Ask AI
+      </button>
+      <button class="btn-icon tooltip" data-tooltip="View contract info">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="2" width="14" height="16" rx="2"/>
+          <line x1="6" y1="6" x2="14" y2="6"/>
+          <line x1="6" y1="10" x2="14" y2="10"/>
+          <line x1="6" y1="14" x2="10" y2="14"/>
+        </svg>
+      </button>
+      <button class="btn-icon tooltip" data-tooltip="Download">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M10 3V13M10 13L6 9M10 13L14 9"/>
+          <path d="M3 15V16C3 16.5523 3.44772 17 4 17H16C16.5523 17 17 16.5523 17 16V15"/>
+        </svg>
+      </button>
+      <button class="btn-icon tooltip" data-tooltip="Reassign Signatory">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="8" cy="6" r="3"/>
+          <path d="M3 17C3 13.5 5 12 8 12"/>
+          <circle cx="14" cy="8" r="2.5"/>
+          <path d="M11 17C11 14.5 12.5 13 14.5 13"/>
+        </svg>
+      </button>
+      <button class="btn-icon tooltip" data-tooltip="Decline to sign">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="2" width="14" height="16" rx="2"/>
+          <line x1="7" y1="7" x2="13" y2="7"/>
+          <line x1="7" y1="10" x2="13" y2="10"/>
+          <line x1="7" y1="13" x2="11" y2="13"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-wrapper" id="contentWrapper">
+      <div class="document-card">
+        <div class="contract-header">
+          <h1 class="contract-title">Co-working Space Membership Agreement</h1>
+          <div class="contract-info">
+            <div class="parties-info">
+              <span>Parties: </span>
+              <span class="party-name">Urban Vault</span>
+              <span> & </span>
+              <span class="party-name">Fike I...</span>
+            </div>
+            <div class="recipients-info">
+              <span>Recipients:</span>
+              <div class="avatar-stack">
+                <div class="avatar avatar-mp">MP</div>
+                <div class="avatar avatar-am">AM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider-wrapper">
+          <div class="divider"></div>
+          <button class="btn btn-primary">Start signing</button>
+        </div>
+
+        <div class="document-wrapper">
+          <div class="document-preview">
+            <div class="document-content">
+              <div class="doc-id">Docusign Envelope ID: 927FE167-2CA2-4077-9D2A-27AAC792A5AF</div>
+              
+              <h2 class="doc-title">NON-DISCLOSURE AGREEMENT (NDA)</h2>
+              
+              <p class="doc-text">
+                This Non-Disclosure Agreement ("<span class="highlight">Agreement</span>") is entered into on <strong>15 March 2025</strong> ("<strong>Effective Date</strong>"), by and between:
+              </p>
+              
+              <p class="doc-text">
+                <strong>SpotDraft Technologies Private Limited</strong>,<br>
+                a company incorporated under the laws of India, having its registered office at<br>
+                <strong>WeWork Galaxy, 43 Residency Road, Bengaluru, Karnataka – 560025,</strong><br>
+                ("<strong>Party A</strong>")
+              </p>
+              
+              <p class="doc-text">and</p>
+              
+              <p class="doc-text">
+                <strong>Acme Innovations Private Limited</strong>,<br>
+                a company incorporated under the laws of India, having its registered office at<br>
+                <strong>3rd Floor, Orion Business Park, Andheri East, Mumbai, Maharashtra – 400069,</strong><br>
+                ("<strong>Party B</strong>").
+              </p>
+              
+              <p class="doc-text">
+                Party A and Party B may be referred to individually as a "<span class="highlight">Party</span>" and collectively as the "<strong>Parties</strong>".
+              </p>
+              
+              <div class="doc-divider"></div>
+              
+              <h3 class="doc-section-title">1. Purpose</h3>
+              
+              <p class="doc-text">
+                The Parties wish to engage in discussions regarding a <strong>potential commercial partnership for</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contract Info Panel -->
+      <div class="contract-info-panel" id="contractInfoPanel">
+        <div class="panel-header">
+          <span class="panel-title">Contract info</span>
+          <button class="panel-close" id="panelClose" title="Close">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="2" y1="2" x2="12" y2="12"/>
+              <line x1="12" y1="2" x2="2" y2="12"/>
+            </svg>
+          </button>
+        </div>
+        <div class="panel-content">
+          <!-- Party Information Section -->
+          <div class="expandable-section">
+            <div class="section-header" data-section="party-info">
+              <span class="section-title">Party Information</span>
+              <div class="section-line"></div>
+              <svg class="section-chevron" viewBox="0 0 14 14" fill="none" stroke="#40566D" stroke-width="1.5">
+                <path d="M3 9L7 5L11 9"/>
+              </svg>
+            </div>
+            <div class="section-content">
+              <div class="info-group">
+                <div class="info-label">Creator Party</div>
+                <div class="info-value">Acme Inc Pvt Ltd</div>
+              </div>
+              <div class="info-group">
+                <div class="info-label">Counterparty</div>
+                <div class="info-value">Georgia Technology Institute</div>
+                <div class="contact-row">
+                  <svg class="contact-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+                    <circle cx="7" cy="4" r="2.5"/>
+                    <path d="M2 13C2 9.5 4 8 7 8C10 8 12 9.5 12 13"/>
+                  </svg>
+                  <span class="contact-text">Romit Raj (romit@yopmail.com)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Intake Form Responses Section -->
+          <div class="expandable-section">
+            <div class="section-header collapsed" data-section="intake">
+              <span class="section-title">Intake form responses</span>
+              <div class="section-line"></div>
+              <svg class="section-chevron" viewBox="0 0 14 14" fill="none" stroke="#40566D" stroke-width="1.5">
+                <path d="M3 9L7 5L11 9"/>
+              </svg>
+            </div>
+            <div class="section-content">
+              <div class="info-group">
+                <div class="info-value">No intake form responses available.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metadata Section -->
+          <div class="expandable-section">
+            <div class="section-header collapsed" data-section="metadata">
+              <span class="section-title">Metadata</span>
+              <div class="section-line"></div>
+              <svg class="section-chevron" viewBox="0 0 14 14" fill="none" stroke="#40566D" stroke-width="1.5">
+                <path d="M3 9L7 5L11 9"/>
+              </svg>
+            </div>
+            <div class="section-content">
+              <div class="info-group">
+                <div class="info-value">No metadata available.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other Information Section -->
+          <div class="expandable-section">
+            <div class="section-header collapsed" data-section="other">
+              <span class="section-title">Other Information</span>
+              <div class="section-line"></div>
+              <svg class="section-chevron" viewBox="0 0 14 14" fill="none" stroke="#40566D" stroke-width="1.5">
+                <path d="M3 9L7 5L11 9"/>
+              </svg>
+            </div>
+            <div class="section-content">
+              <div class="info-group">
+                <div class="info-value">No additional information available.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Salesforce Details Section -->
+          <div class="expandable-section">
+            <div class="section-header collapsed" data-section="salesforce">
+              <span class="section-title">Salesforce Details</span>
+              <div class="section-line"></div>
+              <svg class="section-chevron" viewBox="0 0 14 14" fill="none" stroke="#40566D" stroke-width="1.5">
+                <path d="M3 9L7 5L11 9"/>
+              </svg>
+            </div>
+            <div class="section-content">
+              <div class="info-group">
+                <div class="info-value">No Salesforce integration.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Documents Section -->
+          <div class="expandable-section">
+            <div class="section-header collapsed" data-section="documents">
+              <span class="section-title">Documents</span>
+              <div class="section-line"></div>
+              <svg class="section-chevron" viewBox="0 0 14 14" fill="none" stroke="#40566D" stroke-width="1.5">
+                <path d="M3 9L7 5L11 9"/>
+              </svg>
+            </div>
+            <div class="section-content">
+              <div class="info-group">
+                <div class="info-value">No additional documents.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Zoom Controls -->
+  <div class="zoom-controls">
+    <button class="zoom-btn" title="Zoom In">
+      <svg viewBox="0 0 18 18" fill="none" stroke="#000" stroke-width="1.5">
+        <circle cx="8" cy="8" r="5"/>
+        <line x1="12" y1="12" x2="16" y2="16"/>
+        <line x1="5.5" y1="8" x2="10.5" y2="8"/>
+        <line x1="8" y1="5.5" x2="8" y2="10.5"/>
+      </svg>
+    </button>
+    <span class="zoom-level">100%</span>
+    <button class="zoom-btn" title="Zoom Out">
+      <svg viewBox="0 0 18 18" fill="none" stroke="#000" stroke-width="1.5">
+        <circle cx="8" cy="8" r="5"/>
+        <line x1="12" y1="12" x2="16" y2="16"/>
+        <line x1="5.5" y1="8" x2="10.5" y2="8"/>
+      </svg>
+    </button>
+  </div>
+
+  <script>
+    // Interactive zoom functionality
+    let zoomLevel = 100;
+    const zoomLevelDisplay = document.querySelector('.zoom-level');
+    const documentPreview = document.querySelector('.document-preview');
+    const zoomBtns = document.querySelectorAll('.zoom-btn');
+
+    zoomBtns[0].addEventListener('click', () => {
+      if (zoomLevel < 200) {
+        zoomLevel += 10;
+        updateZoom();
+      }
+    });
+
+    zoomBtns[1].addEventListener('click', () => {
+      if (zoomLevel > 50) {
+        zoomLevel -= 10;
+        updateZoom();
+      }
+    });
+
+    function updateZoom() {
+      zoomLevelDisplay.textContent = zoomLevel + '%';
+      documentPreview.style.transform = `scale(${zoomLevel / 100})`;
+      documentPreview.style.transformOrigin = 'top center';
+    }
+
+    // Button hover effects
+    document.querySelectorAll('.btn, .btn-icon, .zoom-btn').forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        this.style.transition = 'all 0.2s ease';
+      });
+    });
+
+    // Contract Info Panel Toggle
+    const contentWrapper = document.getElementById('contentWrapper');
+    const contractInfoPanel = document.getElementById('contractInfoPanel');
+    const panelClose = document.getElementById('panelClose');
+    const viewContractInfoBtn = document.querySelector('.btn-icon[data-tooltip="View contract info"]');
+
+    function togglePanel() {
+      const isOpen = contentWrapper.classList.contains('panel-open');
+      if (isOpen) {
+        contentWrapper.classList.remove('panel-open');
+        viewContractInfoBtn.classList.remove('active');
+      } else {
+        contentWrapper.classList.add('panel-open');
+        viewContractInfoBtn.classList.add('active');
+      }
+    }
+
+    viewContractInfoBtn.addEventListener('click', togglePanel);
+    panelClose.addEventListener('click', togglePanel);
+
+    // Expandable Sections
+    document.querySelectorAll('.section-header').forEach(header => {
+      header.addEventListener('click', function() {
+        this.classList.toggle('collapsed');
+      });
+    });
+  </script>
+</body>
+</html>
+
