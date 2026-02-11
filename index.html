@@ -1120,6 +1120,14 @@
       border-right-color: #0f2a75;
     }
 
+    /* Finish Signing Bookmark - same navigator, shown next to banner when all fields complete */
+    .signature-navigator.finish-signing-bookmark {
+      pointer-events: auto;
+    }
+    .signature-navigator.finish-signing-bookmark .navigator-btn {
+      cursor: pointer;
+    }
+
     /* Adopt Signature Modal Styles */
     .adopt-modal {
       max-width: 590px;
@@ -1871,9 +1879,9 @@
             <!-- Finish Signing Banner - shown when all fields are complete -->
             <div class="finish-signing-banner" id="finishSigningBanner">
               <p class="finish-signing-text">
-                By clicking <strong>Finish Signing</strong>, I agree to be legally bound by this agreement and the<br><a href="#">Spotdraft Terms of Service</a>.
+                By clicking <strong>Finish signing</strong>, I agree to be legally bound by this agreement and the<br><a href="#">Spotdraft Terms of Service</a>.
               </p>
-              <button class="btn-finish-signing" id="finishSigningBtn">Finish Signing</button>
+              <button class="btn-finish-signing" id="finishSigningBtn">Finish signing</button>
             </div>
           </div>
         </div>
@@ -2524,15 +2532,32 @@
       signingNav.classList.remove('active');
       // Show the finish signing banner
       finishSigningBanner.classList.add('active');
-      // Hide the signature navigator
+      // Show "Finish signing" bookmark aligned with the banner (reuse signature navigator)
       signatureNavigator.classList.remove('active');
+      signatureNavigator.classList.add('finish-signing-bookmark');
+      navigatorBtn.textContent = 'Finish signing';
+      signatureNavigator.style.opacity = '1';
+      signatureNavigator.classList.add('active');
+      positionFinishSigningBookmark();
       
-      // Auto scroll to top of the document
+      // Auto scroll to top of the document; re-position bookmark when scroll settles
       const documentWrapper = document.querySelector('.document-wrapper');
       documentWrapper.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
+      setTimeout(positionFinishSigningBookmark, 500);
+    }
+
+    function positionFinishSigningBookmark() {
+      if (!finishSigningBanner.classList.contains('active')) return;
+      if (!signatureNavigator.classList.contains('finish-signing-bookmark')) return;
+      const documentCard = document.querySelector('.document-card');
+      const bannerRect = finishSigningBanner.getBoundingClientRect();
+      const cardRect = documentCard.getBoundingClientRect();
+      signatureNavigator.style.left = `${cardRect.right + 12}px`;
+      signatureNavigator.style.top = `${bannerRect.top + (bannerRect.height / 2)}px`;
+      signatureNavigator.style.transform = 'translateY(-50%)';
     }
 
     // Success Modal
@@ -2625,9 +2650,11 @@
         }
       }
       
-      // Hide navigator if all fields are signed
+      // When all fields are signed, show Finish Signing bookmark (positioned by positionFinishSigningBookmark)
       if (signedFields.size === totalFields) {
-        signatureNavigator.style.opacity = '0';
+        if (signatureNavigator.classList.contains('finish-signing-bookmark')) {
+          positionFinishSigningBookmark();
+        }
         return;
       } else {
         signatureNavigator.style.opacity = '1';
@@ -2686,8 +2713,15 @@
     });
 
     // Update navigator position on scroll and resize
-    window.addEventListener('scroll', positionNavigator, true);
-    window.addEventListener('resize', positionNavigator);
+    function onScrollOrResize() {
+      if (signatureNavigator.classList.contains('finish-signing-bookmark')) {
+        positionFinishSigningBookmark();
+      } else {
+        positionNavigator();
+      }
+    }
+    window.addEventListener('scroll', onScrollOrResize, true);
+    window.addEventListener('resize', onScrollOrResize);
 
     // Navigator button reference for modal handling
     const navigatorBtn = document.querySelector('.navigator-btn');
@@ -2775,8 +2809,12 @@
     // Track which field triggered the modal
     let activeSigningField = null;
 
-    // Handle Navigator button click - open adopt signature modal or inline edit
+    // Handle Navigator button click - open adopt signature modal or inline edit (or finish signing when bookmark)
     navigatorBtn.addEventListener('click', function() {
+      if (signatureNavigator.classList.contains('finish-signing-bookmark')) {
+        finishSigningBtn.click();
+        return;
+      }
       // Find first unsigned field
       for (let i = 0; i < signingFields.length; i++) {
         if (!signedFields.has(signingFields[i].id)) {
